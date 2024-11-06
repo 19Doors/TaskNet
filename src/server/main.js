@@ -18,19 +18,22 @@ app.get('*', (req, res,next) => {
   next();
 });
 
-app.get("/", (req,res,next)=>{
-  if(req.cookies.jwtToken!=undefined){
-    try {
-      const cc = verifyToken(req.cookies.jwtToken);
-      res.redirect("/homepage");
-    }catch(e) {
-      console.error(e);
-      next();
-    }
-  }else {
-    next();
-  }
-})
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "client", "index.html"));
+});
+// app.get("/", (req,res,next)=>{
+//   if(req.cookies.jwtToken!=undefined){
+//     try {
+//       const cc = verifyToken(req.cookies.jwtToken);
+//       res.redirect("/homepage");
+//     }catch(e) {
+//       console.error(e);
+//       next();
+//     }
+//   }else {
+//     next();
+//   }
+// })
 
 app.get("/homepage", (req,res,next)=> {
   if(req.cookies.jwtToken!=undefined){
