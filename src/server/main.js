@@ -75,7 +75,6 @@ async function st(req,res) {
 }
 app.post('/api/fetch/tasks',ft);
 app.post('/api/set/tasks',st);
-
-ViteExpress.listen(app, 3000, () =>
-  console.log("Server is listening on port 3000..."),
+ViteExpress.listen(app, 3001, () =>
+  console.log("Server is listening on port 3001..."),
 );
