@@ -1,6 +1,7 @@
 import express from "express";
 import Cookies from "js-cookie";
 import ViteExpress from "vite-express";
+import path from 'path';
 
 import {signUpDB, signInDB} from './auth_be.js';
 import cookieParser from "cookie-parser";
@@ -13,8 +14,8 @@ const app = express();
 app.use(express.urlencoded());
 app.use(cookieParser())
 app.use(express.json());
-app.get("*", (req, res,next) => {
-    next();
+app.get('*', (req, res,next) => {
+  next();
 });
 
 app.get("/", (req,res,next)=>{
