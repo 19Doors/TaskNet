@@ -53,6 +53,7 @@ async function signUp(req,res) {
 async function signIn(req,res) {
   // console.log(req);
   await signInDB(req.body,res,app).catch((e)=>{console.log(e);});
+  res.redirect("/homepage")
 }
 
 async function signOut(req,res,next) {
