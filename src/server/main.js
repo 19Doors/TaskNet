@@ -13,7 +13,7 @@ const app = express();
 app.use(express.urlencoded());
 app.use(cookieParser())
 app.use(express.json());
-app.get("/*", (req, res,next) => {
+app.get("*", (req, res,next) => {
     next();
 });
 
