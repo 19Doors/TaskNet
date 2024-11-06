@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Nav from './nav.jsx';
 import { motion } from 'framer-motion';
+import axios from 'axios';
 
 /* CSS */
 const tasksCSS = "ml-5 p-4 active:cursor-grabbing border-lbgg border-2 rounded overflow-auto resize"
@@ -41,10 +42,14 @@ const Task = ({x}) => {
 const AddTask = ({cards,setCards}) => {
   const [hit,fhit] = useState(false);
   const [text,setText] = useState("");
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
+    let max = 1000;
+    let min = 1;
+    axios.post('/api/set/tasks',[...cards, {id:Math.floor(Math.random() * (max - min + 1)) + min, title:text, subTasks:[]}]).then(console.log("TASK ADDED!"));
+    setCards([...cards, {id:Math.floor(Math.random() * (max - min + 1)) + min, title:text, subTasks:[]}]);
+    setText("");
     fhit(false);
-    setCards([...cards, {id:3, title:text, subTasks:[]}]);
   }
   const FillForm = () => {
     return (
@@ -66,16 +71,19 @@ const AddTask = ({cards,setCards}) => {
 const TaskBoard = ({cards, setCards}) => {
   return(
     <motion.div className={taskBoardCss}>
-      <AddTask cards={cards} setCards={setCards}/>
       {cards.map((x) => {
 	return(<Task key={x.id} x={x}/>)
       })}
+      <AddTask cards={cards} setCards={setCards}/>
     </motion.div>
   );
 }
 
 function Homepage() {
   const [cards,setCards] = useState([]);
+  useEffect(()=>{
+    axios.post('/api/fetch/tasks').then((e)=>{setCards(e.data);}).catch((e)=>{console.error(e)});
+  },[]);
   return (
     <div className="h-screen w-full bg-bgg px-24 py-6">
       <Nav />

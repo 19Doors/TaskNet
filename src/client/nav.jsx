@@ -5,8 +5,13 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 function Nav() {
-  function signOutFunc() {
-    axios.post("/signout_action").then(console.log("Completed")).catch(console.log("Sign Out error"));
+  async function signOutFunc() {
+    try {
+      await axios.post("/signout_action");
+      console.log("Completed Sign out");
+    }catch(e) {
+      console.error("Sign Out Error: "+e);
+    }
   }
   return (
     <>
